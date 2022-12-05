@@ -9,3 +9,5 @@ The button is used to reset the settings. Pressing this button when the device i
 Default mode means launching the APK of the access point with the address 192.168.4.1 SSID:THE TERM IS SNMP
 
 SNMP Community RO: Public
+
+Supports up to 10 sensors
