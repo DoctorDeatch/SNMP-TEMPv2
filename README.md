@@ -1,4 +1,4 @@
-# SNMP-TEMP
+# SNMP Environmental Monitor V2.1
 Server Room SNMP Temperature Meter
 This project was created as a cheaper alternative to climate meters for server rooms.
 The system is aimed at using the snmp protocol for temperature control in server racks.
