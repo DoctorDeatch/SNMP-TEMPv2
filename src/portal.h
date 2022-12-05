@@ -17,7 +17,7 @@ void build() {
 
   GP.BUILD_BEGIN();
   GP.THEME(GP_DARK);
-  GP.TITLE("SNMP Temperature Meter");
+  GP.TITLE("SNMP Environmental Monitor");
   GP.NAV_TABS("Info,Network,SNMP,Tools");
 
   GP.NAV_BLOCK_BEGIN();
