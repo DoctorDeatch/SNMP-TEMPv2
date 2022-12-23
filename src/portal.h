@@ -73,8 +73,12 @@ void build() {
     GP_MAKE_BOX(GP.LABEL("Gateway:"); GP.TEXT("gw2",gw1,""););
     GP_MAKE_BOX(GP.LABEL("DNS:"); GP.TEXT("dns2",dns1,""););
     GP_MAKE_BOX(GP.LABEL("Hostname:"); GP.TEXT("hostname2",hostname,""););    
-  GP.BUTTON_MINI("wifi", "SAVE & Reboot", "wifi");
    );
+  GP_MAKE_BLOCK_TAB("Admin Settings", GP.LABEL("");
+    GP_MAKE_BOX(GP.LABEL("Login:"); GP.TEXT("login2",login1,""););
+    GP_MAKE_BOX(GP.LABEL("Password:"); GP.TEXT("pass4",pass3,""););
+   );
+     GP.BUTTON_MINI("wifi", "SAVE & Reboot", "wifi");
   GP.NAV_BLOCK_END();
 
 GP.NAV_BLOCK_BEGIN();
@@ -131,8 +135,12 @@ if (portal.click()){
     system2.toCharArray(system1, 16); EEPROM.put(390,system1);    }
   if (portal.clickString("location2",location2))  {
     location2.toCharArray(location1, 16); EEPROM.put(450,location1);    }
+  if (portal.clickString("login2",login2))  {
+    login2.toCharArray(login1, 16); EEPROM.put(60,login1);    }
+  if (portal.clickString("pass4",pass4))  {
+    pass4.toCharArray(pass3, 16); EEPROM.put(120,pass3);    }
 EEPROM.commit();
-EEPROM.get(270,oid1); EEPROM.get(360,contact1); EEPROM.get(390,system1); EEPROM.get(450,location1);
+EEPROM.get(270,oid1); EEPROM.get(360,contact1); EEPROM.get(390,system1); EEPROM.get(450,location1); EEPROM.get(60,login1); EEPROM.get(120,pass3);
 if (n2>0) {delay(300); ESP.restart();}
 }
 }
