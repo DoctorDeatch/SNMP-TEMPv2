@@ -21,7 +21,7 @@ WiFiUDP udp;
 uint32_t uptame, chipId, hour, SysServices;
 int n1, n2 , snmp_tc[10], snmp_tf[10],rnd1, countSensors;
 byte i, dhcp_on, ap_on, reset_key;
-String lpip, name, ping_ret, Sensor, sensorname, power_mode, found_sensors, dhcpl, hostname2, system2, dns2, location2, ip2, oid2, mask2, gw2, ssid2, pass2, contact2, oid_termc2, oid_termf2, community2="public", fw="2.01";
+String lpip, name, ping_ret, Sensor, sensorname, power_mode, found_sensors, dhcpl, hostname2, system2, dns2, location2, ip2, oid2, mask2, gw2, ssid2, pass2, contact2, oid_termc2, oid_termf2, community2="public", fw="2.0.3";
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 DeviceAddress *sensorsUnique;
@@ -32,7 +32,7 @@ char oid_termc1[40], oid_termf1[40], ssid1[16],pass1[16], hostname1[16], communi
 #include "hard_reset.h"
 SNMPAgent snmp = SNMPAgent();  
 void setup(){
-    EEPROM.begin(EEPROM_SIZE);
+    EEPROM.begin(EEPROM_SIZE);     pinMode(KEY_RESET, INPUT);
     EEPROM.get(1,dhcp_on); EEPROM.get(2,ap_on); EEPROM.get(9,reset_key); 
     if ((dhcp_on==255 && ap_on==255 && reset_key==255) || digitalRead(KEY_RESET)==1) hard_reset();
     EEPROM.get(30,community1); EEPROM.get(90,hostname1); EEPROM.get(150,ssid1); EEPROM.get(210,pass1); EEPROM.get(270,oid1); EEPROM.get(360,contact1); EEPROM.get(390,system1); EEPROM.get(450,location1);
