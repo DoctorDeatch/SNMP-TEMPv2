@@ -21,22 +21,23 @@ WiFiUDP udp;
 uint32_t uptame, chipId, hour, SysServices;
 int n1, n2 , snmp_tc[10], snmp_tf[10],rnd1, countSensors;
 byte i, dhcp_on, ap_on, reset_key;
-String lpip, name, ping_ret, Sensor, sensorname, power_mode, found_sensors, dhcpl, hostname2, system2, dns2, location2, ip2, oid2, mask2, gw2, ssid2, pass2, contact2, oid_termc2, oid_termf2, community2="public", fw="2.0.3";
+String lpip, name, ping_ret, Sensor, sensorname, power_mode, found_sensors, dhcpl, hostname2, system2, dns2, location2, ip2, oid2, mask2, gw2, ssid2, pass2, login2, pass4, contact2, oid_termc2, oid_termf2, community2="public", fw="2.1.0";
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 DeviceAddress *sensorsUnique;
-char oid_termc1[40], oid_termf1[40], ssid1[16],pass1[16], hostname1[16], community1[16], system1[16], location1[16], contact1[16], oid1[30];
+char oid_termc1[40], oid_termf1[40], ssid1[16], pass1[16], login1[16], pass3[16], hostname1[16], community1[16], system1[16], location1[16], contact1[16], oid1[30];
 #include "lp.h"
 #include "sens.h"
 #include "portal.h"
 #include "hard_reset.h"
 SNMPAgent snmp = SNMPAgent();  
 void setup(){
-    EEPROM.begin(EEPROM_SIZE);     pinMode(KEY_RESET, INPUT);
-    EEPROM.get(1,dhcp_on); EEPROM.get(2,ap_on); EEPROM.get(9,reset_key); 
+    Serial.begin(115200);
+    EEPROM.begin(EEPROM_SIZE);    pinMode(KEY_RESET, INPUT);
+    EEPROM.get(1,dhcp_on); EEPROM.get(2,ap_on); EEPROM.get(9,reset_key); delay (100);
     if ((dhcp_on==255 && ap_on==255 && reset_key==255) || digitalRead(KEY_RESET)==1) hard_reset();
-    EEPROM.get(30,community1); EEPROM.get(90,hostname1); EEPROM.get(150,ssid1); EEPROM.get(210,pass1); EEPROM.get(270,oid1); EEPROM.get(360,contact1); EEPROM.get(390,system1); EEPROM.get(450,location1);
-    if (ap_on==0){WiFi.hostname(hostname1); WiFi.begin(ssid1, pass1);}else{WiFi.softAP(ssid1, pass1);}
+    EEPROM.get(30,community1); EEPROM.get(90,hostname1); EEPROM.get(150,ssid1); EEPROM.get(210,pass1); EEPROM.get(270,oid1); EEPROM.get(360,contact1); EEPROM.get(390,system1); EEPROM.get(450,location1); EEPROM.get(60,login1); EEPROM.get(120,pass3);
+   if (ap_on==0){WiFi.hostname(hostname1); WiFi.begin(ssid1, pass1);}else{WiFi.softAP(ssid1, pass1);}
     if (dhcp_on==0){
 IPAddress local_IP(EEPROM.read(10), EEPROM.read(11), EEPROM.read(12), EEPROM.read(13));
 IPAddress subnet(EEPROM.read(15), EEPROM.read(16), EEPROM.read(17), EEPROM.read(18));
@@ -60,6 +61,7 @@ WiFi.config(local_IP,gateway,subnet,primaryDNS,secondaryDNS);
     portal.attach(action);
     portal.start();
     portal.log.start(30);
+    portal.enableAuth(login1, pass3);
     snmp.setUDP(&udp);
     snmp.begin();
     std::string SysDescr = ESP.getChipModel() + ESP.getChipRevision(); 
