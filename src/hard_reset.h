@@ -26,6 +26,8 @@ oid2=".1.3.6.1.4.1.2020.1."; oid2.toCharArray(oid1, 30); EEPROM.put(270,oid1);
 contact2="Admin"; contact2.toCharArray(contact1, 16); EEPROM.put(360,contact1);
 system2="ESP-TEMP01"; system2.toCharArray(system1, 16); EEPROM.put(390,system1);
 location2="LABORATOY"; location2.toCharArray(location1, 16); EEPROM.put(450,location1);
+login2="admin"; login2.toCharArray(login1, 16); EEPROM.put(60,login1);
+pass4="admin"; pass4.toCharArray(pass3, 16); EEPROM.put(120,pass3);
 EEPROM.commit();
 delay (300);
 ESP.restart();
