@@ -66,7 +66,7 @@ void build() {
    GP_MAKE_BLOCK_TAB("Wi-Fi Settings", GP.LABEL("");
     GP_MAKE_BOX(GP.LABEL("AP Mode"); GP.SWITCH("ap", ap_on););
     GP_MAKE_BOX(GP.LABEL("AP name:"); GP.TEXT("ssid2",ssid1,""););
-    GP_MAKE_BOX(GP.LABEL("AP pass:"); GP.PASS("pass2",pass1,""););
+    GP_MAKE_BOX(GP.LABEL("AP pass:"); GP.TEXT("pass2",pass1,""););
     GP_MAKE_BOX(GP.LABEL("DHCP"); GP.SWITCH("dhcp",dhcp_on););
     GP_MAKE_BOX(GP.LABEL("IP address:"); GP.TEXT("ip2",ip1,""););
     GP_MAKE_BOX(GP.LABEL("Mask:"); GP.TEXT("mask2",mask1,""););
@@ -101,51 +101,36 @@ GP.NAV_BLOCK_BEGIN();
 
 void action() {
 if (portal.click()){
- if (portal.click("ping"))  {
-       portal.log.println(HL(portal.getString("ping"))); 
-  }
-   if (portal.click("dhcp"))  {
-       EEPROM.put(1,portal.getInt("dhcp"));  n2=n2+1;
-  }
-  if (portal.click("ap"))  {
-       EEPROM.put(2,portal.getInt("ap"));  n2=n2+1;
-  }
-  if (portal.click("сommunity2"))  {
-  community2 = portal.getString("сommunity2"); community2.toCharArray(community1, 16); EEPROM.put(30,community1); 
-  }
-  if (portal.click("hostname2"))  {
-  hostname2 = portal.getString("hostname2"); hostname2.toCharArray(hostname1, 16); EEPROM.put(90,hostname1);  n2=n2+1;
-  }
-  if (portal.click("ssid2"))  {
-  ssid2 = portal.getString("ssid2"); ssid2.toCharArray(ssid1, 16); EEPROM.put(150,ssid1); n2=n2+1;
-  }
-  if (portal.click("pass2"))  {
-  pass2 = portal.getString("pass2"); pass2.toCharArray(pass1, 16); EEPROM.put(210,pass1); n2=n2+1;
-  }
-  if (portal.click("ip2"))  {
-  ip2 = portal.getString("ip2");  IPAddress ip;  ip.fromString(ip2);  for (int i = 0; i < 4; ++i) { EEPROM.put(10+i,ip[i]); }  n2=n2+1;
-  }
-    if (portal.click("mask2"))  {
-  mask2 = portal.getString("mask2");  IPAddress mask; mask.fromString(mask2); for (int i = 0; i < 4; ++i) { EEPROM.put(15+i,mask[i]); } n2=n2+1;
-  }
-    if (portal.click("gw2"))  {
-  gw2 = portal.getString("gw2");  IPAddress gw; gw.fromString(gw2); for (int i = 0; i < 4; ++i) { EEPROM.put(20+i,gw[i]); }  n2=n2+1;
-}
-    if (portal.click("dns2"))  {
-  dns2 = portal.getString("dns2");  IPAddress dns; dns.fromString(dns2); for (int i = 0; i < 4; ++i) { EEPROM.put(25+i,dns[i]); } n2=n2+1;
-}
-    if (portal.click("oid2"))  {
-  oid2 = portal.getString("oid2"); oid2.toCharArray(oid1, 30); EEPROM.put(270,oid1); 
-    }
-    if (portal.click("contact2"))  {
-  contact2 = portal.getString("contact2"); contact2.toCharArray(contact1, 16); EEPROM.put(360,contact1);
-    }
-    if (portal.click("system2"))  {
-  system2 = portal.getString("system2"); system2.toCharArray(system1, 16); EEPROM.put(390,system1);
-    }
-    if (portal.click("location2"))  {
-  location2 = portal.getString("location2"); location2.toCharArray(location1, 16); EEPROM.put(450,location1);
-    }
+  if (portal.click("ping"))  {
+    portal.log.println(HL(portal.getString("ping")));  }
+  if (portal.clickInt("dhcp", dhcp_on)) {
+    EEPROM.put(1,dhcp_on);  n2=n2+1;   }
+  if (portal.clickInt("ap",ap_on))  {
+    EEPROM.put(2,ap_on);  n2=n2+1;  }
+  if (portal.clickString("сommunity2",community2))  {
+    community2.toCharArray(community1, 16); EEPROM.put(30,community1);   }
+  if (portal.clickString("hostname2",hostname2))  {
+    hostname2.toCharArray(hostname1, 16); EEPROM.put(90,hostname1);  n2=n2+1;  }
+  if (portal.clickString("ssid2",ssid2))  {
+    ssid2.toCharArray(ssid1, 16); EEPROM.put(150,ssid1); n2=n2+1;  }
+  if (portal.clickString("pass2",pass2))  {
+    pass2.toCharArray(pass1, 16); EEPROM.put(210,pass1); n2=n2+1;  }
+  if (portal.clickString("ip2",ip2))  {
+    ip2 = portal.getString("ip2");  IPAddress ip;  ip.fromString(ip2);  for (int i = 0; i < 4; ++i) { EEPROM.put(10+i,ip[i]); }  n2=n2+1;  }
+  if (portal.clickString("mask2",mask2))  {
+    IPAddress mask; mask.fromString(mask2); for (int i = 0; i < 4; ++i) { EEPROM.put(15+i,mask[i]); } n2=n2+1;  }
+  if (portal.clickString("gw2",gw2))  {
+    IPAddress gw; gw.fromString(gw2); for (int i = 0; i < 4; ++i) { EEPROM.put(20+i,gw[i]); }  n2=n2+1;    }
+  if (portal.clickString("dns2",gw2))  {
+    IPAddress dns; dns.fromString(dns2); for (int i = 0; i < 4; ++i) { EEPROM.put(25+i,dns[i]); } n2=n2+1;   }
+  if (portal.clickString("oid2",oid2))  {
+    oid2.toCharArray(oid1, 30); EEPROM.put(270,oid1);     }
+  if (portal.clickString("contact2",contact2))  {
+    contact2.toCharArray(contact1, 16); EEPROM.put(360,contact1);   }
+  if (portal.clickString("system2",system2))  {
+    system2.toCharArray(system1, 16); EEPROM.put(390,system1);    }
+  if (portal.clickString("location2",location2))  {
+    location2.toCharArray(location1, 16); EEPROM.put(450,location1);    }
 EEPROM.commit();
 EEPROM.get(270,oid1); EEPROM.get(360,contact1); EEPROM.get(390,system1); EEPROM.get(450,location1);
 if (n2>0) {delay(300); ESP.restart();}
